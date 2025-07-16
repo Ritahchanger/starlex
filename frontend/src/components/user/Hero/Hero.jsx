@@ -34,7 +34,7 @@ const Hero = () => {
         <div className="relative z-10 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 w-full">
           <div className="grid lg:grid-cols-2 gap-12 items-center">
             <div className="text-white space-y-8">
-              <div className="inline-flex items-center space-x-2 bg-blue-700/50 backdrop-blur-sm px-4 py-2 rounded-full border border-blue-400/30">
+              <div className="hidden sm:inline-flex items-center space-x-2 bg-blue-700/50 backdrop-blur-sm px-4 py-2 rounded-full border border-blue-400/30">
                 <Star className="h-4 w-4 text-yellow-400" />
                 <span className="text-sm font-medium">
                   Trusted Technology Partner
