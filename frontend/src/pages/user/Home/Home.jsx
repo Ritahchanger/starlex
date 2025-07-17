@@ -5,9 +5,7 @@ import WhyChooseUs from "../../../components/user/WhyChooseUs/WhyChooseUs";
 import Testmonials from "../../../components/user/Testmonials/Testmonials";
 import Footer from "../../../components/user/Footer/Footer";
 import WhatsApp from "../../../components/user/WhatsApp/WhatsApp";
-import ContactModal from "../../../components/user/Contact/Contact";
 
-import QuotationModal from "../../../components/user/GetQuotation/GetQuotation";
 
 const Home = () => {
   return (
@@ -18,8 +16,6 @@ const Home = () => {
       <WhyChooseUs />
       <Testmonials />
       <WhatsApp />
-      <ContactModal />
-      <QuotationModal />
       <Footer />
     </div>
   );

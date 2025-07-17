@@ -1,17 +1,19 @@
 import React from "react";
 import { Target, Eye } from "lucide-react";
 
+import "./About.css"
+
 const About = () => {
   return (
     <section
       id="about"
-      className="relative bg-white py-20 text-gray-800 overflow-hidden"
+      className="relative bg-white py-20 text-gray-800 overflow-hidden about"
     >
       <div className="relative z-10 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
         <h2 className="text-4xl md:text-5xl font-bold mb-4 bg-clip-text text-transparent bg-gradient-to-r from-orange-500 via-yellow-400 to-orange-600">
           About Starlex Networks
         </h2>
-        <p className="text-gray-600 text-lg md:text-xl mb-12 max-w-2xl mx-auto">
+        <p className="text-white text-lg md:text-xl mb-12 max-w-2xl mx-auto">
           At Starlex Networks, we are passionate about empowering businesses and
           communities through secure, scalable, and innovative technology. We’re
           committed to delivering excellence through integrity, reliability, and

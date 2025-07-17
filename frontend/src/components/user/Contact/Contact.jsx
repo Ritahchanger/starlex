@@ -6,6 +6,8 @@ import { closeContactModal } from "../../../store/Features/ContactSlice";
 
 import Preloader from "../Preloader/Preloader";
 
+import "./contactModal.css";
+
 const ContactModal = () => {
   const dispatch = useDispatch();
   const { isOpen } = useSelector((state) => state.contact);
@@ -85,7 +87,7 @@ const ContactModal = () => {
     <AnimatePresence>
       {isOpen && (
         <motion.div
-          className="fixed inset-0 bg-black/80 flex items-center justify-center z-50"
+          className="fixed inset-0 bg-black/80 flex items-center justify-center z-50 contact-modal"
           initial={{ opacity: 0 }}
           animate={{ opacity: 1 }}
           exit={{ opacity: 0 }}
@@ -105,7 +107,7 @@ const ContactModal = () => {
               <X className="w-5 h-5" />
             </button>
 
-            <h2 className="text-2xl font-bold text-gray-800 mb-4">
+            <h2 className="text-2xl font-bold text-orange-500 mb-4 text-center">
               Get in Touch
             </h2>
 
@@ -162,7 +164,7 @@ const ContactModal = () => {
               <button
                 type="submit"
                 disabled={loading}
-                className="bg-orange-500 hover:bg-orange-600 text-white py-2 px-6 rounded font-semibold md:col-span-2 transition shadow-md hover:shadow-lg flex items-center justify-center gap-2"
+                className="group bg-gradient-to-r from-blue-500 to-cyan-500 hover:from-blue-400 hover:to-cyan-400 text-white px-8 py-[0.7rem] rounded-full font-semibold shadow-2xl hover:shadow-cyan-500/25 transition-all duration-300 transform hover:scale-105 flex items-center justify-center space-x-2"
               >
                 {loading ? (
                   <>

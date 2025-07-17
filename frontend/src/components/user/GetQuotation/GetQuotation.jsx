@@ -218,7 +218,7 @@ const QuotationModal = () => {
 
               <button
                 type="submit"
-                className="w-full py-2 bg-orange-500 hover:bg-orange-600 text-white font-semibold  shadow transition"
+                className="group bg-gradient-to-r from-blue-500 to-cyan-500 hover:from-blue-400 hover:to-cyan-400 text-white px-8 py-[0.7rem] rounded-full font-semibold shadow-2xl hover:shadow-cyan-500/25 transition-all duration-300 transform hover:scale-105 flex items-center justify-center space-x-2 w-full"
               >
                 Submit Request
               </button>
