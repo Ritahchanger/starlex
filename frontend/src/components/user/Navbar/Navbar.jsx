@@ -31,7 +31,7 @@ const Navbar = () => {
   ];
 
   return (
-    <nav className="bg-gradient-to-r from-blue-900 via-blue-800 to-blue-900 shadow-2xl fixed w-full right-0 left-0 top-0 z-50 py-[0.3rem]">
+    <nav className="bg-gradient-to-r from-blue-900 via-blue-800 to-blue-900 shadow-2xl fixed w-full right-0 left-0 top-0 z-40 py-[0.3rem]">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div className="flex justify-between">
           <div className="flex items-center space-x-3">

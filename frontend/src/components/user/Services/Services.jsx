@@ -1,8 +1,7 @@
 import React, { useState } from "react";
 import { Wifi, Shield, Globe, Code, ChevronDown, Loader2 } from "lucide-react";
-import { motion } from "framer-motion";
 
-import "./Services.css"
+import "./Services.css";
 
 const services = [
   {
@@ -55,8 +54,7 @@ const Services = () => {
   const imageCards = [
     {
       title: "CCTV INSTALLATIONS",
-      image:
-        "https://images.pexels.com/photos/430208/pexels-photo-430208.jpeg",
+      image: "https://images.pexels.com/photos/430208/pexels-photo-430208.jpeg",
     },
     {
       title: "WEB DEVELOPMENT",
@@ -76,16 +74,13 @@ const Services = () => {
   ];
 
   return (
-    <section
-      id="services"
-      className="py-20 services"
-    >
+    <section id="services" className="py-20 services">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
-        <h2 className="text-4xl md:text-5xl font-bold mb-4 text-white drop-shadow-lg">
+        <h2 className="text-4xl md:text-5xl font-bold mb-4 bg-clip-text text-transparent bg-gradient-to-r from-orange-500 via-yellow-400 to-orange-600">
           What We Offer
         </h2>
 
-        <p className="text-white/90 text-base md:text-lg font-light max-w-2xl mx-auto mb-12">
+        <p className="text-white text-base md:text-lg font-light max-w-2xl mx-auto mb-12">
           From digital transformation to advanced security, our solutions are
           built for innovation and reliability.
         </p>
@@ -160,41 +155,24 @@ const Services = () => {
           </div>
         </div>
 
-        {/* Image Cards with Framer Motion */}
+        {/* Image Cards */}
         <div className="mt-16 grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
           {imageCards.map((card, index) => (
-            <motion.div
+            <div
               key={index}
-              className="relative overflow-hidden rounded-sm shadow-lg group cursor-pointer"
-              whileHover={{ 
-                scale: 1.03,
-                boxShadow: "0 25px 50px -12px rgba(0, 0, 0, 0.25)"
-              }}
-              transition={{ duration: 0.3, ease: "easeOut" }}
+              className="relative overflow-hidden rounded-sm shadow-lg group hover:shadow-2xl transition-all duration-300"
             >
-              <motion.img
+              <img
                 src={card.image}
                 alt={card.title}
-                className="w-full h-60 object-cover"
-                whileHover={{ scale: 1.1 }}
-                transition={{ duration: 0.4, ease: "easeOut" }}
+                className="w-full h-60 object-cover transform group-hover:scale-105 transition-transform duration-300"
               />
-              <motion.div
-                className="absolute inset-0 bg-black/50 flex items-center justify-center"
-                initial={{ opacity: 0 }}
-                whileHover={{ opacity: 1 }}
-                transition={{ duration: 0.3, ease: "easeInOut" }}
-              >
-                <motion.h2
-                  className="text-white text-lg font-bold text-center px-4"
-                  initial={{ y: 20, opacity: 0 }}
-                  whileHover={{ y: 0, opacity: 1 }}
-                  transition={{ duration: 0.3, delay: 0.1, ease: "easeOut" }}
-                >
+              <div className="absolute inset-0 bg-black/50 flex items-center justify-center">
+                <h2 className="text-white text-lg font-bold text-center px-4">
                   {card.title}
-                </motion.h2>
-              </motion.div>
-            </motion.div>
+                </h2>
+              </div>
+            </div>
           ))}
         </div>
       </div>
