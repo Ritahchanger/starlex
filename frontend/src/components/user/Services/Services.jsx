@@ -1,5 +1,8 @@
 import React, { useState } from "react";
 import { Wifi, Shield, Globe, Code, ChevronDown, Loader2 } from "lucide-react";
+import { motion } from "framer-motion";
+
+import "./Services.css"
 
 const services = [
   {
@@ -38,21 +41,44 @@ const Services = () => {
 
   const toggleAccordion = (index) => {
     if (activeIndex === index) {
-      setActiveIndex(null); // collapse if same index is clicked
+      setActiveIndex(null);
       return;
     }
 
-    setLoadingIndex(index); // show loading
+    setLoadingIndex(index);
     setTimeout(() => {
       setActiveIndex(index);
       setLoadingIndex(null);
-    }, 300); // 300ms delay
+    }, 300);
   };
+
+  const imageCards = [
+    {
+      title: "CCTV INSTALLATIONS",
+      image:
+        "https://images.pexels.com/photos/430208/pexels-photo-430208.jpeg",
+    },
+    {
+      title: "WEB DEVELOPMENT",
+      image:
+        "https://images.pexels.com/photos/39284/macbook-apple-imac-computer-39284.jpeg",
+    },
+    {
+      title: "SOFTWARE DEVELOPMENT",
+      image:
+        "https://images.pexels.com/photos/3861972/pexels-photo-3861972.jpeg",
+    },
+    {
+      title: "DATA ENGINEERING & DEVOPS",
+      image:
+        "https://images.pexels.com/photos/4816921/pexels-photo-4816921.jpeg",
+    },
+  ];
 
   return (
     <section
       id="services"
-      className="bg-gradient-to-br from-orange-500 via-orange-400 to-yellow-300 py-20"
+      className="py-20 services"
     >
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
         <h2 className="text-4xl md:text-5xl font-bold mb-4 text-white drop-shadow-lg">
@@ -78,7 +104,7 @@ const Services = () => {
                 {service.name}
               </h3>
 
-              <p className=" text-gray-600 mb-3 leading-relaxed text-center text-sm tracking-widest font-semibold">
+              <p className="text-gray-600 mb-3 leading-relaxed text-center text-sm tracking-widest font-semibold">
                 {service.short}
               </p>
 
@@ -102,12 +128,73 @@ const Services = () => {
                 </div>
               ) : (
                 activeIndex === index && (
-                  <div className="mt-3 text-sm text-gray-700 tracking-wider  border-t border-neutral-300 pt-3">
+                  <div className="mt-3 text-sm text-gray-700 tracking-wider border-t border-neutral-300 pt-3 text-center">
                     {service.details}
                   </div>
                 )
               )}
             </div>
+          ))}
+        </div>
+
+        {/* Feature highlight */}
+        <div className="mt-16 grid grid-cols-1 md:grid-cols-2 gap-8 items-center bg-white rounded-sm shadow-lg p-6">
+          <img
+            src="https://images.pexels.com/photos/2881229/pexels-photo-2881229.jpeg"
+            alt="Networking solutions"
+            className="w-full h-auto rounded-sm shadow"
+          />
+
+          <div>
+            <h3 className="text-2xl font-bold text-gray-800 mb-4">
+              We Offer the Best Networking Solutions
+            </h3>
+            <p className="text-gray-600 text-sm leading-relaxed tracking-wide">
+              Our networking services are tailored for businesses and homes,
+              ensuring top-tier security, speed, and reliability. From
+              structured cabling to wireless optimization, we empower your
+              digital infrastructure. Whether you're building a new system or
+              upgrading an existing one, our team delivers performance-driven
+              results with 24/7 support and proactive maintenance.
+            </p>
+          </div>
+        </div>
+
+        {/* Image Cards with Framer Motion */}
+        <div className="mt-16 grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
+          {imageCards.map((card, index) => (
+            <motion.div
+              key={index}
+              className="relative overflow-hidden rounded-sm shadow-lg group cursor-pointer"
+              whileHover={{ 
+                scale: 1.03,
+                boxShadow: "0 25px 50px -12px rgba(0, 0, 0, 0.25)"
+              }}
+              transition={{ duration: 0.3, ease: "easeOut" }}
+            >
+              <motion.img
+                src={card.image}
+                alt={card.title}
+                className="w-full h-60 object-cover"
+                whileHover={{ scale: 1.1 }}
+                transition={{ duration: 0.4, ease: "easeOut" }}
+              />
+              <motion.div
+                className="absolute inset-0 bg-black/50 flex items-center justify-center"
+                initial={{ opacity: 0 }}
+                whileHover={{ opacity: 1 }}
+                transition={{ duration: 0.3, ease: "easeInOut" }}
+              >
+                <motion.h2
+                  className="text-white text-lg font-bold text-center px-4"
+                  initial={{ y: 20, opacity: 0 }}
+                  whileHover={{ y: 0, opacity: 1 }}
+                  transition={{ duration: 0.3, delay: 0.1, ease: "easeOut" }}
+                >
+                  {card.title}
+                </motion.h2>
+              </motion.div>
+            </motion.div>
           ))}
         </div>
       </div>

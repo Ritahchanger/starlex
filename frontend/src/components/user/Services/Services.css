@@ -1,0 +1,11 @@
+.services {
+  background: linear-gradient(rgba(0, 0, 0, 0.45), rgba(0, 0, 0, 0.45)),
+    url("https://images.pexels.com/photos/2881233/pexels-photo-2881233.jpeg");
+  background-position: center;
+  background-size: cover;
+  background-attachment: fixed;
+}
+
+.perspective {
+  perspective: 1000px;
+}
