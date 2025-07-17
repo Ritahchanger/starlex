@@ -2,6 +2,7 @@ import React, { useState } from "react";
 import { Wifi, Shield, Globe, Code, ChevronDown, Loader2 } from "lucide-react";
 
 import "./Services.css";
+import ServicesCarouse from "./ServicesCarouse";
 
 const services = [
   {
@@ -51,27 +52,6 @@ const Services = () => {
     }, 300);
   };
 
-  const imageCards = [
-    {
-      title: "CCTV INSTALLATIONS",
-      image: "https://images.pexels.com/photos/430208/pexels-photo-430208.jpeg",
-    },
-    {
-      title: "WEB DEVELOPMENT",
-      image:
-        "https://images.pexels.com/photos/39284/macbook-apple-imac-computer-39284.jpeg",
-    },
-    {
-      title: "SOFTWARE DEVELOPMENT",
-      image:
-        "https://images.pexels.com/photos/3861972/pexels-photo-3861972.jpeg",
-    },
-    {
-      title: "DATA ENGINEERING & DEVOPS",
-      image:
-        "https://images.pexels.com/photos/4816921/pexels-photo-4816921.jpeg",
-    },
-  ];
 
   return (
     <section id="services" className="py-20 services">
@@ -133,14 +113,14 @@ const Services = () => {
         </div>
 
         {/* Feature highlight */}
-        <div className="mt-16 grid grid-cols-1 md:grid-cols-2 gap-8 items-center bg-white rounded-sm shadow-lg p-6">
+        <div className="mt-16 grid grid-cols-1 md:grid-cols-2 gap-8 items-center bg-white  shadow-lg md:p-6">
           <img
             src="https://images.pexels.com/photos/2881229/pexels-photo-2881229.jpeg"
             alt="Networking solutions"
-            className="w-full h-auto rounded-sm shadow"
+            className="w-full h-auto  shadow"
           />
 
-          <div>
+          <div className="p-6 pt-0 md:p-0">
             <h3 className="text-2xl font-bold text-gray-800 mb-4">
               We Offer the Best Networking Solutions
             </h3>
@@ -156,25 +136,7 @@ const Services = () => {
         </div>
 
         {/* Image Cards */}
-        <div className="mt-16 grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
-          {imageCards.map((card, index) => (
-            <div
-              key={index}
-              className="relative overflow-hidden rounded-sm shadow-lg group hover:shadow-2xl transition-all duration-300"
-            >
-              <img
-                src={card.image}
-                alt={card.title}
-                className="w-full h-60 object-cover transform group-hover:scale-105 transition-transform duration-300"
-              />
-              <div className="absolute inset-0 bg-black/50 flex items-center justify-center">
-                <h2 className="text-white text-lg font-bold text-center px-4">
-                  {card.title}
-                </h2>
-              </div>
-            </div>
-          ))}
-        </div>
+      <ServicesCarouse/>
       </div>
     </section>
   );
