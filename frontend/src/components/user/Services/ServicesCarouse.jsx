@@ -4,10 +4,10 @@ import Carousel from "react-multi-carousel";
 import "react-multi-carousel/lib/styles.css";
 
 const responsive = {
-  superLargeDesktop: { breakpoint: { max: 4000, min: 3000 }, items: 2},
+  superLargeDesktop: { breakpoint: { max: 4000, min: 3000 }, items: 2 },
   desktop: { breakpoint: { max: 3000, min: 1024 }, items: 2 },
   tablet: { breakpoint: { max: 1024, min: 768 }, items: 2 },
-  mobile: { breakpoint: { max: 768, min: 0 }, items: 2 },
+  mobile: { breakpoint: { max: 768, min: 0 }, items: 1 },
 };
 
 const services = [
@@ -30,9 +30,7 @@ const services = [
   },
 ];
 
-
 const ServicesCarousel = () => {
-
   const showDots = window.innerWidth <= 768;
 
   return (
@@ -40,7 +38,7 @@ const ServicesCarousel = () => {
       <Carousel
         swipeable
         draggable
-        showDots={ showDots } 
+        showDots={false}
         responsive={responsive}
         ssr
         infinite
