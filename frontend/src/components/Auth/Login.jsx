@@ -15,15 +15,15 @@ const Login = () => {
     e.preventDefault();
     try {
       const response = await axiosInstance.post(
-        "/api/v1/admin/login",
+        "/api/v1/auth/login",
         { email, password },
         { withCredentials: true }
       );
       if (response.data.success) {
 
-        login();
+        await login();
         navigate("/admin");
-        
+
       }
     } catch (error) {
       console.error(

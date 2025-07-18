@@ -6,6 +6,9 @@ import {
   Settings,
   LogOut,
 } from "lucide-react";
+import { axiosInstance } from "../../../config/axiosInstance";
+import { useAuth } from "../../../context/AuthProvider";
+import { useNavigate } from "react-router-dom";
 
 const menuItems = [
   {
@@ -19,10 +22,18 @@ const menuItems = [
 ];
 
 const Sidebar = () => {
+  const { logout } = useAuth();
+  const navigate = useNavigate(); // ✅ Move this here
+
+  const handleLogout = async () => {
+    await logout();
+    navigate("/auth/sign-in");
+  };
+
   return (
     <div className="h-screen w-64 bg-gradient-to-b from-indigo-900 via-indigo-800 to-indigo-900 text-white flex flex-col fixed top-0 left-0 shadow-xl">
       <div className="p-6 py-2 text-2xl font-extrabold tracking-wide border-b border-indigo-700">
-        Startlex 
+        Startlex
       </div>
 
       <nav className="flex-1 p-4 space-y-2">
@@ -39,13 +50,13 @@ const Sidebar = () => {
       </nav>
 
       <div className="p-4 border-t border-indigo-700">
-        <a
-          href="/logout"
-          className="flex items-center gap-3 px-4 py-2 text-sm font-medium rounded-md bg-red-600 hover:bg-red-700 transition-all"
+        <button
+          onClick={handleLogout}
+          className="flex items-center gap-3 px-4 py-2 text-sm font-medium rounded-md bg-red-600 hover:bg-red-700 transition-all w-full"
         >
           <LogOut size={20} />
           <span>Logout</span>
-        </a>
+        </button>
       </div>
     </div>
   );
