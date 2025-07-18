@@ -1,9 +1,7 @@
 import React, { useState } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import { X } from "lucide-react";
-
 import { useDispatch, useSelector } from "react-redux";
-
 import { closeQuotationSlice } from "../../../store/Features/QuotationSlice";
 
 const services = [
@@ -15,7 +13,6 @@ const services = [
 
 const QuotationModal = () => {
   const dispatch = useDispatch();
-
   const { isOpen } = useSelector((state) => state.quotation);
 
   const [formData, setFormData] = useState({
@@ -47,7 +44,7 @@ const QuotationModal = () => {
     if (!formData.phone.trim()) {
       newErrors.phone = "Phone number is required.";
     } else if (!/^254\d{9}$/.test(formData.phone.trim())) {
-      newErrors.phone = "Phone must start with 254 and be 12 digits total.";
+      newErrors.phone = "Phone must start with 254 and be 12 digits.";
     }
     if (!formData.service) newErrors.service = "Please select a service.";
 
@@ -76,133 +73,78 @@ const QuotationModal = () => {
       service: "",
     });
     setErrors({});
-    setIsOpen(false);
+    dispatch(closeQuotationSlice());
   };
 
   return (
     <AnimatePresence>
       {isOpen && (
         <>
+          {/* Backdrop */}
           <motion.div
-            className="fixed inset-0 bg-black/90 z-50"
+            className="fixed inset-0 bg-black/70 z-40"
             initial={{ opacity: 0 }}
             animate={{ opacity: 1 }}
             exit={{ opacity: 0 }}
-            onClick={() => {
-              dispatch(closeQuotationSlice());
-            }}
+            onClick={() => dispatch(closeQuotationSlice())}
           />
 
+          {/* Modal */}
           <motion.div
-            className="fixed top-0 right-0 h-full w-full sm:max-w-[700px] bg-white z-50 p-6 overflow-y-auto shadow-xl"
+            className="fixed top-0 right-0 h-full w-full sm:max-w-[600px] bg-white z-50 p-6 overflow-y-auto shadow-2xl"
             initial={{ x: "100%" }}
             animate={{ x: 0 }}
             exit={{ x: "100%" }}
             transition={{ duration: 0.4 }}
           >
-            <div className="flex justify-between items-center mb-3 border-b border-blue-400">
-              <h2 className="text-xl font-bold text-blue-800 ">
+            <div className="flex justify-between items-center mb-6">
+              <h2 className="text-2xl font-semibold text-blue-700">
                 Request a Quotation
               </h2>
-              <button
-                onClick={() => {
-                  dispatch(closeQuotationSlice());
-                }}
-                className="text-red-500"
-              >
-                <X className="w-5 h-5" />
+              <button onClick={() => dispatch(closeQuotationSlice())}>
+                <X className="w-6 h-6 text-red-500 hover:text-red-700" />
               </button>
             </div>
 
-            <form onSubmit={handleSubmit} className="space-y-4 text-sm">
-              <div>
-                <input
-                  type="text"
-                  name="firstName"
-                  placeholder="First Name"
-                  value={formData.firstName}
-                  onChange={handleChange}
-                  className={`w-full px-4 py-2 border ${
-                    errors.firstName ? "border-red-500" : "border-gray-300"
-                  }  focus:outline-none focus:ring-2 focus:ring-orange-400`}
-                />
-                {errors.firstName && (
-                  <p className="text-red-500 text-xs">{errors.firstName}</p>
-                )}
-              </div>
+            <form onSubmit={handleSubmit} className="space-y-5 text-sm">
+              {/* Input fields */}
+              {[
+                { name: "firstName", placeholder: "First Name", type: "text" },
+                { name: "lastName", placeholder: "Last Name", type: "text" },
+                { name: "email", placeholder: "Email Address", type: "email" },
+                { name: "idNumber", placeholder: "ID Number", type: "text" },
+                {
+                  name: "phone",
+                  placeholder: "Phone Number (e.g. 254712345678)",
+                  type: "text",
+                },
+              ].map(({ name, placeholder, type }) => (
+                <div key={name}>
+                  <input
+                    type={type}
+                    name={name}
+                    placeholder={placeholder}
+                    value={formData[name]}
+                    onChange={handleChange}
+                    className={`w-full px-4 py-2 border ${
+                      errors[name] ? "border-red-500" : "border-gray-300"
+                    } rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500`}
+                  />
+                  {errors[name] && (
+                    <p className="text-red-500 text-xs mt-1">{errors[name]}</p>
+                  )}
+                </div>
+              ))}
 
-              <div>
-                <input
-                  type="text"
-                  name="lastName"
-                  placeholder="Last Name"
-                  value={formData.lastName}
-                  onChange={handleChange}
-                  className={`w-full px-4 py-2 border ${
-                    errors.lastName ? "border-red-500" : "border-gray-300"
-                  } focus:outline-none focus:ring-2 focus:ring-orange-400`}
-                />
-                {errors.lastName && (
-                  <p className="text-red-500 text-xs">{errors.lastName}</p>
-                )}
-              </div>
-
-              <div>
-                <input
-                  type="email"
-                  name="email"
-                  placeholder="Email Address"
-                  value={formData.email}
-                  onChange={handleChange}
-                  className={`w-full px-4 py-2 border ${
-                    errors.email ? "border-red-500" : "border-gray-300"
-                  }  focus:outline-none focus:ring-2 focus:ring-orange-400`}
-                />
-                {errors.email && (
-                  <p className="text-red-500 text-xs">{errors.email}</p>
-                )}
-              </div>
-
-              <div>
-                <input
-                  type="text"
-                  name="idNumber"
-                  placeholder="ID Number"
-                  value={formData.idNumber}
-                  onChange={handleChange}
-                  className={`w-full px-4 py-2 border ${
-                    errors.idNumber ? "border-red-500" : "border-gray-300"
-                  }  focus:outline-none focus:ring-2 focus:ring-orange-400`}
-                />
-                {errors.idNumber && (
-                  <p className="text-red-500 text-xs">{errors.idNumber}</p>
-                )}
-              </div>
-
-              <div>
-                <input
-                  type="text"
-                  name="phone"
-                  placeholder="Phone Number (e.g. 254712345678)"
-                  value={formData.phone}
-                  onChange={handleChange}
-                  className={`w-full px-4 py-2 border ${
-                    errors.phone ? "border-red-500" : "border-gray-300"
-                  } focus:outline-none focus:ring-2 focus:ring-orange-400`}
-                />
-                {errors.phone && (
-                  <p className="text-red-500 text-xs">{errors.phone}</p>
-                )}
-              </div>
-
+              {/* Service dropdown */}
               <div>
                 <select
                   name="service"
                   value={formData.service}
                   onChange={handleChange}
-                  className={`w-full px-4 py-2 border border-neutral-300 ${
-                    errors.service ? "border-red-500" : "border-neutral-300"
-                  }bg-white focus:outline-none focus:ring-2 focus:ring-orange-400`}
+                  className={`w-full px-4 py-2 border ${
+                    errors.service ? "border-red-500" : "border-gray-300"
+                  } rounded-md bg-white focus:outline-none focus:ring-2 focus:ring-blue-500`}
                 >
                   <option value="">-- Select a Service --</option>
                   {services.map((service, index) => (
@@ -212,13 +154,14 @@ const QuotationModal = () => {
                   ))}
                 </select>
                 {errors.service && (
-                  <p className="text-red-500 text-xs">{errors.service}</p>
+                  <p className="text-red-500 text-xs mt-1">{errors.service}</p>
                 )}
               </div>
 
+              {/* Submit button */}
               <button
                 type="submit"
-                className="group bg-gradient-to-r from-blue-500 to-cyan-500 hover:from-blue-400 hover:to-cyan-400 text-white px-8 py-[0.7rem] rounded-full font-semibold shadow-2xl hover:shadow-cyan-500/25 transition-all duration-300 transform hover:scale-105 flex items-center justify-center space-x-2 w-full"
+                className="w-full bg-gradient-to-r from-blue-600 to-cyan-500 hover:from-blue-500 hover:to-cyan-400 text-white py-3 rounded-full font-medium shadow-md hover:shadow-lg transition-all duration-300 transform hover:scale-[1.02]"
               >
                 Submit Request
               </button>
