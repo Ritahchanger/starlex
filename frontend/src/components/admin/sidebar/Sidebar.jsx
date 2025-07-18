@@ -6,7 +6,6 @@ import {
   Settings,
   LogOut,
 } from "lucide-react";
-import { axiosInstance } from "../../../config/axiosInstance";
 import { useAuth } from "../../../context/AuthProvider";
 import { useNavigate } from "react-router-dom";
 
@@ -23,7 +22,7 @@ const menuItems = [
 
 const Sidebar = () => {
   const { logout } = useAuth();
-  const navigate = useNavigate(); // ✅ Move this here
+  const navigate = useNavigate(); 
 
   const handleLogout = async () => {
     await logout();
