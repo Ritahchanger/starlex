@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState } from "react";
 import {
   Facebook,
   Twitter,
@@ -9,8 +9,48 @@ import {
   Phone,
   Send,
 } from "lucide-react";
+import axios from "axios";
 
 const Footer = () => {
+  const [email, setEmail] = useState("");
+  const [status, setStatus] = useState(null); // 'success' | 'error' | null
+
+  const [error, setError] = useState("");
+
+  const handleNewsletterSubscribe = async (e) => {
+    e.preventDefault();
+    setStatus(null);
+    setError("");
+
+    if (!email.trim()) {
+      setStatus("empty");
+      return;
+    }
+
+    try {
+      const response = await axios.post(
+        `${import.meta.env.VITE_API_BASE_URL}/api/v1/newseller/subscribe`,
+        { email }
+      );
+
+      if (response.data.success) {
+        setStatus("success");
+        setEmail("");
+        setError("");
+      } else {
+        setStatus("error");
+        setError(response.data.message || "Something went wrong.");
+      }
+    } catch (err) {
+      setStatus("error");
+      if (err.response && err.response.data?.message) {
+        setError(err.response.data.message);
+      } else {
+        setError("Something went wrong. Please try again.");
+      }
+    }
+  };
+
   return (
     <footer className="bg-gradient-to-br from-blue-900 via-blue-800 to-blue-900 text-white py-12">
       <div className="max-w-7xl mx-auto px-6 grid grid-cols-1 md:grid-cols-4 gap-10">
@@ -66,16 +106,13 @@ const Footer = () => {
           </h3>
           <ul className="text-sm space-y-2 text-gray-300">
             <li className="flex items-start gap-2">
-              <MapPin className="w-4 h-4 mt-1" />
-              Nairobi, Kenya
+              <MapPin className="w-4 h-4 mt-1" /> Nairobi, Kenya
             </li>
             <li className="flex items-start gap-2">
-              <Phone className="w-4 h-4 mt-1" />
-              +254 712 345 678
+              <Phone className="w-4 h-4 mt-1" /> +254 712 345 678
             </li>
             <li className="flex items-start gap-2">
-              <Mail className="w-4 h-4 mt-1" />
-              info@starlexnetworks.com
+              <Mail className="w-4 h-4 mt-1" /> info@starlexnetworks.com
             </li>
           </ul>
         </div>
@@ -100,11 +137,10 @@ const Footer = () => {
             </a>
           </div>
         </div>
-
-        {/* Newsletter */}
       </div>
 
-      <div className="max-w-7xl mx-auto">
+      {/* Newsletter Section */}
+      <div className="max-w-7xl mx-auto mt-12">
         <div className="px-6 max-w-[600px]">
           <h3 className="text-lg font-semibold mb-4 text-orange-300">
             Newsletter
@@ -112,9 +148,14 @@ const Footer = () => {
           <p className="text-sm text-gray-300 mb-4">
             Stay updated with our latest offers, tech news, and updates.
           </p>
-          <form className="flex flex-row sm:flex-row items-center gap-2 w-full">
+          <form
+            onSubmit={handleNewsletterSubscribe}
+            className="flex flex-col sm:flex-row items-center gap-2 w-full"
+          >
             <input
               type="email"
+              value={email}
+              onChange={(e) => setEmail(e.target.value)}
               placeholder="Enter your email"
               className="flex-grow px-4 py-2 bg-white text-gray-800 text-sm focus:outline-none focus:ring-2 focus:ring-orange-400 w-full"
               required
@@ -127,10 +168,24 @@ const Footer = () => {
               Subscribe
             </button>
           </form>
+
+          {/* Feedback */}
+          {status === "success" && (
+            <p className="text-green-400 text-sm mt-2">
+              Subscribed successfully!
+            </p>
+          )}
+          {status === "error" && (
+            <p className="text-red-400 text-sm mt-2">{error}</p>
+          )}
+          {status === "empty" && (
+            <p className="text-yellow-400 text-sm mt-2">
+              Please enter your email.
+            </p>
+          )}
         </div>
       </div>
 
-      {/* Copyright */}
       <div className="text-center text-sm text-gray-400 mt-10 border-t border-blue-700 pt-6 px-4">
         &copy; {new Date().getFullYear()} Starlex Networks. All rights reserved.
       </div>

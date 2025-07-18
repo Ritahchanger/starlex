@@ -20,7 +20,7 @@ const App = () => {
         <Route path="/portfolio" element={<Portfolio />} />
 
         <Route
-          path="/admin/dashboard"
+          path="/admin"
           element={
             <ProtectedRoute>
               <Dashboard />

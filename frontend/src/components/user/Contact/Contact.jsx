@@ -8,8 +8,12 @@ import Preloader from "../Preloader/Preloader";
 
 import "./contactModal.css";
 
+import { baseUrl } from "../../../config/baseUrl";
+import axios from "axios";
+
 const ContactModal = () => {
   const dispatch = useDispatch();
+
   const { isOpen } = useSelector((state) => state.contact);
 
   const [formData, setFormData] = useState({
@@ -63,24 +67,38 @@ const ContactModal = () => {
     e.preventDefault();
     if (!validate()) return;
 
-    setLoading(true);
+    try {
+      setLoading(true);
 
-    setTimeout(() => {
-      console.log("Contact Form Submitted:", formData);
-      alert("Message submitted successfully!");
+      const response = await axios.post(
+        `${baseUrl}/api/v1/contact/message/submit`,
+        formData
+      );
 
-      dispatch(closeContactModal());
-      setFormData({
-        firstName: "",
-        lastName: "",
-        phone: "",
-        email: "",
-        location: "",
-        message: "",
-      });
-      setErrors({});
+      if (response.data.success) {
+        alert("Message submitted successfully!");
+        dispatch(closeContactModal());
+        setFormData({
+          firstName: "",
+          lastName: "",
+          phone: "",
+          email: "",
+          location: "",
+          message: "",
+        });
+        setErrors({});
+      } else {
+        alert("Something went wrong. Try again.");
+      }
+    } catch (err) {
+      if (err.response?.data?.message) {
+        alert(err.response.data.message);
+      } else {
+        alert("Failed to submit. Please try again later.");
+      }
+    } finally {
       setLoading(false);
-    }, 2000); // Simulate a 2-second API request
+    }
   };
 
   return (
@@ -164,7 +182,7 @@ const ContactModal = () => {
               <button
                 type="submit"
                 disabled={loading}
-                className="group bg-gradient-to-r from-blue-500 to-cyan-500 hover:from-blue-400 hover:to-cyan-400 text-white px-8 py-[0.7rem] rounded-full font-semibold shadow-2xl hover:shadow-cyan-500/25 transition-all duration-300 transform hover:scale-105 flex items-center justify-center space-x-2"
+                className="w-full bg-gradient-to-r from-blue-600 to-cyan-500 hover:from-blue-500 hover:to-cyan-400 text-white py-3 rounded-full font-medium shadow-md hover:shadow-lg transition-all duration-300 transform hover:scale-[1.02] mx-auto"
               >
                 {loading ? (
                   <>

@@ -4,6 +4,11 @@ import { X } from "lucide-react";
 import { useDispatch, useSelector } from "react-redux";
 import { closeQuotationSlice } from "../../../store/Features/QuotationSlice";
 
+import axios from "axios";
+
+import { baseUrl } from "../../../config/baseUrl";
+import Preloader from "../Preloader/Preloader";
+
 const services = [
   "Networking Solutions",
   "CCTV Systems",
@@ -14,6 +19,8 @@ const services = [
 const QuotationModal = () => {
   const dispatch = useDispatch();
   const { isOpen } = useSelector((state) => state.quotation);
+
+  const [loading, setLoading] = useState(false);
 
   const [formData, setFormData] = useState({
     firstName: "",
@@ -58,22 +65,43 @@ const QuotationModal = () => {
     setErrors((prev) => ({ ...prev, [name]: "" }));
   };
 
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
     if (!validate()) return;
 
-    console.log("Quotation Request Submitted:", formData);
-    alert("Quotation request submitted!");
-    setFormData({
-      firstName: "",
-      lastName: "",
-      email: "",
-      idNumber: "",
-      phone: "",
-      service: "",
-    });
-    setErrors({});
-    dispatch(closeQuotationSlice());
+    try {
+      setLoading(true);
+
+      const response = await axios.post(
+        `${baseUrl}/api/v1/quotation`,
+        formData
+      );
+
+      if (response.data.success) {
+        alert("Quotation submitted successfully!");
+
+        setFormData({
+          firstName: "",
+          lastName: "",
+          email: "",
+          idNumber: "",
+          phone: "",
+          service: "",
+        });
+        setErrors({});
+        dispatch(closeQuotationSlice());
+      } else {
+        alert("Something went wrong. Try again.");
+      }
+    } catch (err) {
+      if (err.response?.data?.message) {
+        alert(err.response.data.message);
+      } else {
+        alert("Failed to submit. Please try again later.");
+      }
+    } finally {
+      setLoading(false);
+    }
   };
 
   return (
@@ -158,12 +186,14 @@ const QuotationModal = () => {
                 )}
               </div>
 
-              {/* Submit button */}
               <button
                 type="submit"
-                className="w-full bg-gradient-to-r from-blue-600 to-cyan-500 hover:from-blue-500 hover:to-cyan-400 text-white py-3 rounded-full font-medium shadow-md hover:shadow-lg transition-all duration-300 transform hover:scale-[1.02]"
+                disabled={loading}
+                className={`w-full bg-gradient-to-r from-blue-600 to-cyan-500 hover:from-blue-500 hover:to-cyan-400 text-white py-3 rounded-full font-medium shadow-md hover:shadow-lg transition-all duration-300 transform hover:scale-[1.02] ${
+                  loading ? "opacity-50 cursor-not-allowed" : ""
+                }`}
               >
-                Submit Request
+                {loading ? <Preloader /> : "Submit Request"}
               </button>
             </form>
           </motion.div>
