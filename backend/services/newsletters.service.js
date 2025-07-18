@@ -1,6 +1,5 @@
 const Newsletter = require("../models/newsletters.model");
 
-
 const subscribeEmail = async (email) => {
   const existing = await Newsletter.findOne({ email });
   if (existing) {
@@ -10,13 +9,9 @@ const subscribeEmail = async (email) => {
   return newSubscriber;
 };
 
-
-
 const getAllSubscribers = async () => {
   return await Newsletter.find().sort({ createdAt: -1 });
 };
-
-
 
 const deleteSubscriber = async (email) => {
   const deleted = await Newsletter.findOneAndDelete({ email });
@@ -25,8 +20,6 @@ const deleteSubscriber = async (email) => {
   }
   return deleted;
 };
-
-
 
 module.exports = {
   subscribeEmail,

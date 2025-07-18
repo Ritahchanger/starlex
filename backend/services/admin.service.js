@@ -2,6 +2,8 @@ const Admin = require("../models/admin.model");
 
 const generateToken = require("../utils/generateToken");
 
+const bcrypt = require("bcryptjs");
+
 const createAdmin = async (adminData) => {
   const { email, idNumber, password } = adminData;
 
@@ -28,9 +30,11 @@ const createAdmin = async (adminData) => {
 
 const loginAdmin = async ({ email, password }) => {
   const admin = await Admin.findOne({ email });
+
   if (!admin) throw new Error("Invalid credentials.");
 
-  const isMatch = await admin.comparePassword(password);
+  const isMatch = await bcrypt.compare(password, admin.password);
+
   if (!isMatch) throw new Error("Invalid credentials.");
 
   const token = generateToken(admin._id);
@@ -41,4 +45,10 @@ const getAllAdmins = async () => {
   return await Admin.find().select("-password").sort({ createdAt: -1 });
 };
 
-module.exports = { createAdmin, loginAdmin,getAllAdmins };
+const getAdminMe = async (adminId) => {
+  const admin = await Admin.findById(adminId).select("-password");
+  if (!admin) throw new Error("Admin not found.");
+  return admin;
+};
+
+module.exports = { createAdmin, loginAdmin, getAllAdmins, getAdminMe };

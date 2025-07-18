@@ -1,16 +1,16 @@
 const AdminController = require("../controllers/admin.controller");
 
-const Router = require("express").Router()
+
+const Router = require("express").Router();
 
 
 const asyncWrapper = require("../middleware/asyncWrapper");
 
 
-Router.post("/signup", asyncWrapper(AdminController.signup));
 
-Router.post("/login", asyncWrapper(AdminController.login));
 
-Router.post("/logout", asyncWrapper(AdminController.logout));
+Router.get("/me", asyncWrapper(AdminController.getMe));
 
-module.exports = Router
+Router.post("/", asyncWrapper(AdminController.getAllAdmins));
 
+module.exports = Router;

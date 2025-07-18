@@ -14,7 +14,6 @@ const subscribe = async (req, res) => {
   });
 };
 
-
 const getSubscribers = async (req, res) => {
   const subscribers = await NewsletterService.getAllSubscribers();
   res.status(200).json({
@@ -24,7 +23,6 @@ const getSubscribers = async (req, res) => {
   });
 };
 
-
 const removeSubscriber = async (req, res) => {
   const { email } = req.params;
   const deleted = await NewsletterService.deleteSubscriber(email);
@@ -33,7 +31,6 @@ const removeSubscriber = async (req, res) => {
     message: `Unsubscribed: ${deleted.email}`,
   });
 };
-
 
 module.exports = {
   subscribe,
