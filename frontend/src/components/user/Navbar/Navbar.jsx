@@ -41,18 +41,14 @@ const Navbar = () => {
     }
     setIsOpen(false);
   };
-  const services = [
-    { name: "Networking Solutions", icon: Wifi },
-    { name: "CCTV Systems", icon: Shield },
-    { name: "Web Design", icon: Globe },
-    { name: "Software Development", icon: Code },
-  ];
   const menuItems = [
     { name: "Home", href: "#home" },
     { name: "About", href: "#about" },
     { name: "Portfolio", href: "/portfolio" },
     { name: "Contact", href: "#contact", modal: "contact" },
+    { name: "Services", href: "#contact", modal: "services" },
   ];
+
 
   return (
     <nav className="bg-gradient-to-r from-blue-900 via-blue-800 to-blue-900 shadow-2xl fixed w-full right-0 left-0 top-0 z-40 py-[0.3rem]">
@@ -73,48 +69,12 @@ const Navbar = () => {
                 {item.name}
               </button>
             ))}
-            <div
-              className="relative"
-              onMouseEnter={() => setActiveDropdown("services")}
-              onMouseLeave={() => setActiveDropdown(null)}
-            >
-              <button className="text-white hover:text-blue-200 transition-colors duration-300 font-medium flex items-center space-x-1">
+            <div className="relative">
+              <button className="text-white hover:text-blue-200 transition-colors duration-300 font-medium flex items-center space-x-1"
+              
+              >
                 <span>Services</span>
-                <ChevronDown
-                  className={`h-4 w-4 transition-transform duration-300 ${
-                    activeDropdown === "services" ? "rotate-180" : ""
-                  }`}
-                />
               </button>
-
-              {activeDropdown === "services" && (
-                <div className="absolute top-full left-0 mt-2 w-64 bg-white shadow-2xl border border-blue-100">
-                  <div className="bg-gradient-to-r from-blue-50 to-blue-100 px-4 py-3">
-                    <h3 className="font-semibold text-blue-900">
-                      Our Services
-                    </h3>
-                  </div>
-                  {services.map((service, index) => (
-                    <a
-                      key={index}
-                      href={`#${service.name
-                        .toLowerCase()
-                        .replace(/\s+/g, "-")}`}
-                      onClick={() =>
-                        handleNavigation(
-                          `#${service.name.toLowerCase().replace(/\s+/g, "-")}`
-                        )
-                      }
-                      className="flex items-center space-x-3 px-4 py-3 hover:bg-blue-50 transition-colors duration-200 group"
-                    >
-                      <service.icon className="h-5 w-5 text-blue-600 group-hover:text-blue-800" />
-                      <span className="text-gray-700 group-hover:text-blue-900">
-                        {service.name}
-                      </span>
-                    </a>
-                  ))}
-                </div>
-              )}
             </div>
 
             {/* Quote Button */}
@@ -163,36 +123,9 @@ const Navbar = () => {
 
           {/* Mobile Services Dropdown */}
           <div>
-            <button
-              onClick={() => toggleDropdown("services")}
-              className="w-full flex items-center justify-between text-white hover:text-blue-200 hover:bg-blue-700 px-3 py-2 rounded transition-colors duration-200"
-            >
+            <button className="w-full flex items-center justify-between text-white hover:text-blue-200 hover:bg-blue-700 px-3 py-2 rounded transition-colors duration-200">
               <span>Services</span>
-              <ChevronDown
-                className={`h-4 w-4 transition-transform duration-300 ${
-                  activeDropdown === "services" ? "rotate-180" : ""
-                }`}
-              />
             </button>
-
-            {activeDropdown === "services" && (
-              <div className="mt-2 ml-4 space-y-1">
-                {services.map((service, index) => (
-                  <button
-                    key={index}
-                    onClick={() =>
-                      handleNavigation(
-                        `#${service.name.toLowerCase().replace(/\s+/g, "-")}`
-                      )
-                    }
-                    className="flex items-center space-x-3 text-blue-200 hover:text-white hover:bg-blue-700 px-3 py-2 rounded-sm transition-colors duration-200 text-sm"
-                  >
-                    <service.icon className="h-4 w-4" />
-                    <span>{service.name}</span>
-                  </button>
-                ))}
-              </div>
-            )}
           </div>
 
           {/* Get Quote Button */}

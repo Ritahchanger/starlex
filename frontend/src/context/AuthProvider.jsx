@@ -13,8 +13,8 @@ export const AuthProvider = ({ children }) => {
     setAuthLoading(true);
     try {
       const res = await axiosInstance.get("/api/v1/admin/me");
-      console.log("User fetched:", res.data.user || res.data.data);
-      setUser(res.data.user || res.data.data);
+      console.log("User fetched:", res.data.admin);
+      setUser(res.data.admin);
       setIsAuthenticated(true);
       sessionStorage.setItem("isAuthenticated", "true");
     } catch (err) {

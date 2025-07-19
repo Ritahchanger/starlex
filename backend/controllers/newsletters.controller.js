@@ -23,6 +23,7 @@ const getSubscribers = async (req, res) => {
   });
 };
 
+
 const removeSubscriber = async (req, res) => {
   const { email } = req.params;
   const deleted = await NewsletterService.deleteSubscriber(email);
@@ -32,8 +33,32 @@ const removeSubscriber = async (req, res) => {
   });
 };
 
+
+
+const sendNewsletter = async (req, res) => {
+  const { subject, message } = req.body;
+  if (!subject || !message) {
+    return res.status(400).json({ error: "Subject and message are required." });
+  }
+  try {
+    const result = await NewsletterService.sendNewsletterToAll({
+      subject,
+      message,
+    });
+    res.status(200).json({
+      message: `Newsletter sent to ${result.success} subscribers.`,
+      failed: result.failed,
+    });
+  } catch (error) {
+    res.status(500).json({ error: error.message });
+  }
+};
+
+
+
 module.exports = {
   subscribe,
   getSubscribers,
   removeSubscriber,
+  sendNewsletter,
 };

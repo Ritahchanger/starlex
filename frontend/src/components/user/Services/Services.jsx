@@ -52,7 +52,6 @@ const Services = () => {
     }, 300);
   };
 
-
   return (
     <section id="services" className="py-20 services">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
@@ -60,7 +59,7 @@ const Services = () => {
           What We Offer
         </h2>
 
-        <p className="text-white text-base md:text-lg font-light max-w-2xl mx-auto mb-12">
+        <p className="text-white text-lg md:text-xl mb-12 max-w-2xl mx-auto">
           From digital transformation to advanced security, our solutions are
           built for innovation and reliability.
         </p>
@@ -136,7 +135,7 @@ const Services = () => {
         </div>
 
         {/* Image Cards */}
-      <ServicesCarouse/>
+        <ServicesCarouse />
       </div>
     </section>
   );

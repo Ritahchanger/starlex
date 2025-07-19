@@ -51,4 +51,14 @@ const getAdminMe = async (adminId) => {
   return admin;
 };
 
-module.exports = { createAdmin, loginAdmin, getAllAdmins, getAdminMe };
+const deleteAdminById = async (adminId) => {
+  const admin = await Admin.findById(adminId);
+  if (!admin) {
+    throw new Error("Admin not found.");
+  }
+
+  await Admin.findByIdAndDelete(adminId);
+  return { message: "Admin deleted successfully." };
+};
+
+module.exports = { createAdmin, loginAdmin, getAllAdmins, getAdminMe, deleteAdminById};
