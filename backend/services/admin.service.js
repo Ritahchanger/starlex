@@ -36,7 +36,7 @@ const createAdmin = async (adminData) => {
     <p>Your admin account has been created successfully.</p>
     <p><strong>Email:</strong> ${email}</p>
     <p><strong>Password:</strong> ${plainPassword}</p>
-    <p>Please login and change this password immediately for security purposes.</p>
+   
   `;
 
   await sendEmail(

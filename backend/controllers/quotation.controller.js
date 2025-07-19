@@ -28,9 +28,28 @@ const deleteQuotation = async (req, res) => {
     message: `Deleted quotation from ${deleted.firstName} ${deleted.lastName}`,
   });
 };
+const emailQuotationPdf = async (req, res) => {
+  try {
+    const { email, fullName, fileName, base64PDF } = req.body;
+
+    const result = await QuotationService.sendQuotationPdf(
+      email,
+      fullName,
+      fileName,
+      base64PDF
+    );
+
+    res.status(200).json({
+      message: result.message,
+    });
+  } catch (error) {
+    res.status(500).json({ error: error.message });
+  }
+};
 
 module.exports = {
   submitQuotationForm,
   getQuotations,
   deleteQuotation,
+  emailQuotationPdf,
 };
