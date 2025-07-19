@@ -1,5 +1,7 @@
 const AdminService = require("../services/admin.service");
 
+const { sendEmail } = require("../utils/singleEmailSent");
+
 const signup = async (req, res) => {
   const admin = await AdminService.createAdmin(req.body);
 

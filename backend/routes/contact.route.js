@@ -8,6 +8,6 @@ Router.get("/", asyncWrapper(ContactController.getContactMessages));
 
 Router.delete("/:id", asyncWrapper(ContactController.deleteContactMessage));
 
-Router.post("/:reply", asyncWrapper(ContactController.sendReplyToMessage));
+Router.post("/reply", asyncWrapper(ContactController.sendReplyToMessage));
 
 module.exports = Router;

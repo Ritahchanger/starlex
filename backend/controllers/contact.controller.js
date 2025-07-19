@@ -29,13 +29,18 @@ const deleteContactMessage = async (req, res) => {
 
 const sendReplyToMessage = async (req, res) => {
   const { subject, email, message } = req.body;
+  console.log("Reply Data:", req.body);
   if (!subject || !email || !message) {
     return res.status(400).json({
       success: false,
       message: "Subject, email, and message are required.",
     });
   }
-  const response = await replyToMessage({ subject, email, message });
+  const response = await ContactService.replyToMessage({
+    email,
+    subject,
+    message,
+  });
   res.status(200).json({
     success: true,
     message: response.message,

@@ -4,8 +4,12 @@ const generateToken = require("../utils/generateToken");
 
 const bcrypt = require("bcryptjs");
 
+const { generateCustomPassword } = require("../utils/generatePassword");
+
+const { sendEmail } = require("../utils/singleEmailSent");
+
 const createAdmin = async (adminData) => {
-  const { email, idNumber, password } = adminData;
+  const { email, idNumber } = adminData;
 
   const existingEmail = await Admin.findOne({ email });
   if (existingEmail) {
@@ -17,13 +21,29 @@ const createAdmin = async (adminData) => {
     throw new Error("ID Number already in use.");
   }
 
+  const plainPassword = generateCustomPassword();
+
   const salt = await bcrypt.genSalt(10);
-  const hashedPassword = await bcrypt.hash(password, salt);
+  const hashedPassword = await bcrypt.hash(plainPassword, salt);
 
   const newAdmin = await Admin.create({
     ...adminData,
     password: hashedPassword,
   });
+
+  const message = `
+    <h2>Hello ${adminData.firstName} ${adminData.secondName},</h2>
+    <p>Your admin account has been created successfully.</p>
+    <p><strong>Email:</strong> ${email}</p>
+    <p><strong>Password:</strong> ${plainPassword}</p>
+    <p>Please login and change this password immediately for security purposes.</p>
+  `;
+
+  await sendEmail(
+    adminData.email,
+    "Your Admin Account Password - Starlex Innovation",
+    message
+  );
 
   return newAdmin;
 };
@@ -61,4 +81,10 @@ const deleteAdminById = async (adminId) => {
   return { message: "Admin deleted successfully." };
 };
 
-module.exports = { createAdmin, loginAdmin, getAllAdmins, getAdminMe, deleteAdminById};
+module.exports = {
+  createAdmin,
+  loginAdmin,
+  getAllAdmins,
+  getAdminMe,
+  deleteAdminById,
+};

@@ -20,17 +20,8 @@ const deleteMessage = async (id) => {
 };
 
 const replyToMessage = async ({ subject, email, message }) => {
-  await sendEmail({
-    email,
-    subject,
-    message,
-  });
-
-  original.replied = true;
-
-  original.repliedAt = new Date();
   
-  await original.save();
+  await sendEmail(email, subject, message);
 
   return { success: true, message: "Reply sent successfully." };
 };
