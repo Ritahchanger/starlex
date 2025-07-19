@@ -247,7 +247,6 @@ const NewsletterEditor = () => {
 
   return (
     <div className="min-h-screen">
-      {/* Notifications */}
       {success && (
         <NotificationBar
           type="success"

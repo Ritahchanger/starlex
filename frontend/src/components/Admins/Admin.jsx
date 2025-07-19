@@ -1,10 +1,6 @@
 import React, { useEffect, useState } from "react";
 import { axiosInstance } from "../../config/axiosInstance";
-
-import { useAuth } from "../../context/AuthProvider";
-
 const Admin = () => {
-  const { user,logout } = useAuth();
   const [admins, setAdmins] = useState([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
@@ -50,12 +46,15 @@ const Admin = () => {
   const handleAddAdmin = async (e) => {
     e.preventDefault();
     try {
-      const res = await axiosInstance.post("/api/v1/admin/", form);
-      setAdmins([...admins, res.data.data]);
+      console.log("Adding admin with form data:", form);
+      const res = await axiosInstance.post("/api/v1/auth/signup", form);
+      const newAdmin = res.data.admin;
+      setAdmins([...admins, newAdmin]);
       setForm({ firstName: "", secondName: "", email: "", idNumber: "" });
+      alert("Admin added and password sent via email.");
     } catch (err) {
       console.error("Error adding admin:", err);
-      alert("Failed to add admin.");
+      alert(err?.response?.data?.message || "Failed to add admin.");
     }
   };
 
