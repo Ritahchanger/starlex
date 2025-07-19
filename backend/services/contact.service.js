@@ -1,7 +1,8 @@
 const ContactMessage = require("../models/contact.model");
 
+const { sendEmail } = require("../utils/singleEmailSent");
+
 const submitMessage = async (data) => {
-    
   const newMessage = await ContactMessage.create(data);
   return newMessage;
 };
@@ -18,8 +19,25 @@ const deleteMessage = async (id) => {
   return deleted;
 };
 
+const replyToMessage = async ({ subject, email, message }) => {
+  await sendEmail({
+    email,
+    subject,
+    message,
+  });
+
+  original.replied = true;
+
+  original.repliedAt = new Date();
+  
+  await original.save();
+
+  return { success: true, message: "Reply sent successfully." };
+};
+
 module.exports = {
   submitMessage,
   getAllMessages,
   deleteMessage,
+  replyToMessage,
 };

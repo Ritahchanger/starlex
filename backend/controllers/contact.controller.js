@@ -27,8 +27,24 @@ const deleteContactMessage = async (req, res) => {
   });
 };
 
+const sendReplyToMessage = async (req, res) => {
+  const { subject, email, message } = req.body;
+  if (!subject || !email || !message) {
+    return res.status(400).json({
+      success: false,
+      message: "Subject, email, and message are required.",
+    });
+  }
+  const response = await replyToMessage({ subject, email, message });
+  res.status(200).json({
+    success: true,
+    message: response.message,
+  });
+};
+
 module.exports = {
   submitContactForm,
   getContactMessages,
   deleteContactMessage,
+  sendReplyToMessage,
 };
