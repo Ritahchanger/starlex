@@ -1,4 +1,5 @@
-const { transporter } = require("../config/nodemailer");
+const path = require("path");
+const { transporter } = require("../utils/transporter");
 const logo = path.join(__dirname, "../public/icons/starlex.jpeg");
 let logoBase64 = "";
 try {
@@ -12,7 +13,7 @@ try {
 const sendEmail = async (email, subject, message) => {
   const baseUrl = process.env.BASE_URL || "https://starlex.co.ke";
   const mailOptions = {
-    from: `"${fromName}" <${process.env.COMPANY_EMAIL}>`,
+    from: `"STARLET INNOVATION TECHNOLOGIES" <${process.env.COMPANY_EMAIL}>`,
     to: email,
     subject,
     html: `
