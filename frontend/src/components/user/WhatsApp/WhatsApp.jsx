@@ -3,7 +3,7 @@ import { MessageCircle, X } from "lucide-react";
 
 const WhatsApp = () => {
   const [showModal, setShowModal] = useState(false);
-  const whatsappNumber = "254113174493";
+  const whatsappNumber = "254713457529";
 
   const openWhatsApp = () => {
     window.open(`https://wa.me/${whatsappNumber}`, "_blank");
